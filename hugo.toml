@@ -1,0 +1,12 @@
+baseURL = 'https://leykon.com'
+languageCode = 'en-us'
+title = 'Leykon'
+disableHugoGeneratorInject = true
+disableKinds = ['taxonomy', 'term', 'page', 'section', 'sitemap']
+
+[module]
+    [module.hugoVersion]
+        min = "0.128.0"
+
+[params]
+  description = 'Leykon offers hardware and software solutions, specializing in small electronic systems, embedded systems, and business applications. We deliver smart, efficient, and reliable technology tailored to your needs.'

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {{ $description := (default .Site.Params.description .Page.Description) }}
+    {{ $title := (default site.Title .Page.Title) }}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ $title }}</title>
+    <meta name="title" content="{{ $title }}">
+    <meta name="description" content="{{ $description }}">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="Leykon">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="canonical" href="{{ .Permalink }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta property="og:title" content="{{ $title }}">
+    <meta property="og:description" content="{{ $description }}">
+    <meta property="og:image" content="{{ .Site.BaseURL }}og.jpg">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@tomkonidas">
+    <meta name="twitter:creator" content="@tomkonidas">
+    <meta name="twitter:url" content="{{ .Permalink }}">
+    <meta name="twitter:title" content="{{ $title }}">
+    <meta name="twitter:description" content="{{ $description }}">
+    <meta name="twitter:image" content="{{ .Site.BaseURL }}og.jpg">
+
+    {{ $styles :=
+        slice
+          (resources.Get "css/normalize.css")
+          (resources.Get "css/nord.css")
+          (resources.Get "css/styles.css")
+        | resources.Concat "styles.css"
+    }}
+    {{ if hugo.IsDevelopment }}
+        <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+    {{ else }}
+        {{ $styles := $styles | minify | fingerprint }}
+        <link
+            rel="stylesheet"
+            href="{{ $styles.RelPermalink }}"
+            integrity="{{ $styles.Data.Integrity }}"
+            crossorigin="anonymous">
+    {{ end }}
+  </head>
+  <body>
+    {{ block "main" . }}{{ end }}
+  </body>
+</html>
